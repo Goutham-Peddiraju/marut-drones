@@ -24,7 +24,7 @@ export default function Dashboard() {
   try {
     if (!user?._id) return;
 
-    const res = await axios.get(`http://localhost:5000/booking/${user._id}`);
+    const res = await axios.get(`https://marut-drones.onrender.com/booking/${user._id}`);
 
     setBookings(res.data.bookings);
   } catch (err) {
@@ -47,7 +47,7 @@ const handleBooking = async () => {
       return;
     }
 
-    const res = await axios.post("http://localhost:5000/booking", {
+    const res = await axios.post("https://marut-drones.onrender.com/booking", {
       droneName,
       startTime,
       totalDuration,

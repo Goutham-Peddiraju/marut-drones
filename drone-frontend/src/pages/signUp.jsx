@@ -16,7 +16,7 @@ export default function SignUp() {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:5000/auth/register", {
+      const response = await axios.post("https://marut-drones.onrender.com/auth/register", {
   name,
   email,
   password,
