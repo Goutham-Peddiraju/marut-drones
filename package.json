@@ -1,0 +1,16 @@
+{
+  "name": "drone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+   "build":"npm install --prefix drone-backend && npm install --prefix drone-frontend && npm run build --prefix drone-frontend",
+    "start": "npm run start --prefix drone-backend",
+    "backend:dev":"npm run dev --prefix drone-backend",
+    "frontend:dev":"npm run dev --prefix drone-frontend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
