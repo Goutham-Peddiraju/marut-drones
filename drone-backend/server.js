@@ -1,40 +1,50 @@
-//server.js
-
+// server.js
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require("cors");
+
 dotenv.config();
 app.use(express.json());
+
+// Import routes
 const bookingRoutes = require("./routes/bookingRoute");
 const userRoutes = require('./routes/userRoutes');
 const droneRoutes = require('./routes/droneRoutes');
 
-
-
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
-.then(()=>(console.log('connected to database .....')))
-.catch(()=>console.log('Database connection failed.....'))
+  .then(() => console.log('✅ Connected to database'))
+  .catch(() => console.log('❌ Database connection failed'));
 
-app.use(cors()); 
+// CORS setup (allow your frontend only)
+app.use(cors({
+  origin: "https://goutham-droneproject.vercel.app", 
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
-app.get('/',async(req,res)=>{
-    return res.json({
-        success:true,
-        message:"From Backend"
-    })
-})
+// Test API
+app.get("/api/test", async (req, res) => {
+  return res.json({
+    success: true,
+    message: "From Backend"
+  });
+});
 
+// Routes
 app.use('/auth', userRoutes);
-
-app.use('/drone',droneRoutes);
-
+app.use('/drone', droneRoutes);
 app.use('/booking', bookingRoutes);
 
+// ✅ For local development
+if (process.env.NODE_ENV !== "production") {
+  const port = process.env.PORT || 5000;
+  app.listen(port, () => {
+    console.log(`🚀 Server running on http://localhost:${port}`);
+  });
+}
 
-const port = process.env.PORT;
-app.listen(port,()=>{
-    console.log(`Server Started SuccessFully...... ${port}`);
-})
-
+// ✅ For Vercel deployment (export app)
+module.exports = app;
